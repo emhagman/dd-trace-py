@@ -259,7 +259,8 @@ def test_standalone_request_identity_tags_use_active_semantics():
 
     assert datadog_span.get_tag(http.USER_AGENT) == "datadog-agent"
     assert datadog_span.get_tag(http.CLIENT_IP) == "192.0.2.1"
-    assert datadog_span.get_tag("network.client.ip") == "192.0.2.1"
+    # Without a peer address there is no network.client.ip; the client IP may come from a header.
+    assert datadog_span.get_tag("network.client.ip") is None
     assert otel_span.get_tag(http.OTEL_USER_AGENT_ORIGINAL) == "otel-agent"
     assert otel_span.get_tag(http.OTEL_CLIENT_ADDRESS) == "192.0.2.2"
     assert otel_span.get_tag(net.NETWORK_PEER_ADDRESS) is None
