@@ -1,0 +1,4 @@
+---
+fixes:
+  - |
+    profiling: optimizes unwinding async tasks by removing duplicate map construction
